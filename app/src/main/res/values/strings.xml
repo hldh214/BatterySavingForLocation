@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">BatterySavingForLocation</string>
     <string name="battery_saving">BATTERY_SAVING</string>
+    <string name="high_accuracy">HIGH_ACCURACY</string>
+    <string name="text_view">TextView</string>
 </resources>
