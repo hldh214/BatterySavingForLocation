@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BatterySavingForLocation</string>
+    <string name="battery_saving">BATTERY_SAVING</string>
+</resources>
