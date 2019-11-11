@@ -27,35 +27,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun batterySaving() {
-        Settings.Secure.putInt(
+        Settings.Secure.putString(
             contentResolver,
-            Settings.Secure.LOCATION_MODE,
-            Settings.Secure.LOCATION_MODE_BATTERY_SAVING
+            Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
+            "+network,-gps"
         )
 
         getLocationMode()
     }
 
     private fun highAccuracy() {
-        Settings.Secure.putInt(
+        Settings.Secure.putString(
             contentResolver,
-            Settings.Secure.LOCATION_MODE,
-            Settings.Secure.LOCATION_MODE_HIGH_ACCURACY
+            Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
+            "+network,+gps"
         )
 
         getLocationMode()
     }
 
     private fun getLocationMode() {
-        val locationMode = Settings.Secure.getInt(contentResolver, Settings.Secure.LOCATION_MODE)
-        val locationModeString: String
+        val locationMode = Settings.Secure.getString(
+            contentResolver,
+            Settings.Secure.LOCATION_PROVIDERS_ALLOWED
+        )
 
-        locationModeString = when (locationMode) {
-            Settings.Secure.LOCATION_MODE_BATTERY_SAVING -> "BATTERY_SAVING"
-            Settings.Secure.LOCATION_MODE_HIGH_ACCURACY -> "HIGH_ACCURACY"
-            else -> "Unknown: $locationMode"
-        }
-
-        textView.text = locationModeString
+        textView.text = locationMode
     }
 }
