@@ -2,12 +2,14 @@ package cc.yii2.batterysavingforlocation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import cc.yii2.batterysavingforlocation.utils.LocationProviders
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private var locationProvider: LocationProviders = LocationProviders(contentResolver)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(view: View) {
         when (view.id) {
-            R.id.button_battery_saving -> batterySaving()
-            R.id.button_high_accuracy -> highAccuracy()
+            R.id.button_battery_saving -> this.locationProvider.batterySaving()
+            R.id.button_high_accuracy -> this.locationProvider.highAccuracy()
         }
 
         // https://github.com/RichyHBM/Monochromatic/wiki/Enabling-WRITE_SECURE_SETTINGS-permission
@@ -26,31 +28,8 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "done", Toast.LENGTH_LONG).show()
     }
 
-    private fun batterySaving() {
-        Settings.Secure.putString(
-            contentResolver,
-            Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
-            "+network,-gps"
-        )
-
-        getLocationMode()
-    }
-
-    private fun highAccuracy() {
-        Settings.Secure.putString(
-            contentResolver,
-            Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
-            "+network,+gps"
-        )
-
-        getLocationMode()
-    }
-
     private fun getLocationMode() {
-        val locationMode = Settings.Secure.getString(
-            contentResolver,
-            Settings.Secure.LOCATION_PROVIDERS_ALLOWED
-        )
+        val locationMode = this.locationProvider.getLocationMode()
 
         textView.text = locationMode
     }
