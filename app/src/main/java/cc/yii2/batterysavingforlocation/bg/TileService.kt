@@ -5,10 +5,15 @@ import cc.yii2.batterysavingforlocation.utils.LocationProviders
 import android.service.quicksettings.TileService as BaseTileService
 
 class TileService : BaseTileService() {
-    private var locationProvider: LocationProviders = LocationProviders(this)
-
     override fun onClick() {
         super.onClick()
+
+        val locationProvider = LocationProviders(this)
+
+        when (locationProvider.getLocationMode()) {
+            locationProvider.highAccuracyMode -> locationProvider.batterySaving()
+            locationProvider.batterSavingMode -> locationProvider.highAccuracy()
+        }
 
         this.stateChange()
     }
@@ -27,10 +32,18 @@ class TileService : BaseTileService() {
     }
 
     private fun stateChange() {
-        qsTile.state = when (this.locationProvider.getLocationMode()) {
-            this.locationProvider.highAccuracyMode -> Tile.STATE_ACTIVE
-            this.locationProvider.batterSavingMode -> Tile.STATE_INACTIVE
+        val locationProvider = LocationProviders(this)
+
+        qsTile.state = when (locationProvider.getLocationMode()) {
+            locationProvider.highAccuracyMode -> Tile.STATE_ACTIVE
+            locationProvider.batterSavingMode -> Tile.STATE_INACTIVE
             else -> Tile.STATE_UNAVAILABLE
+        }
+
+        qsTile.label = when (locationProvider.getLocationMode()) {
+            locationProvider.highAccuracyMode -> "highAccuracy"
+            locationProvider.batterSavingMode -> "batterSaving"
+            else -> "???"
         }
 
         qsTile.updateTile()

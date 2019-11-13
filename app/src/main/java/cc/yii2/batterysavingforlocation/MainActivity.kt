@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.enableButton()
+        this.getLocationMode()
 
         // https://github.com/RichyHBM/Monochromatic/wiki/Enabling-WRITE_SECURE_SETTINGS-permission
         // https://android.stackexchange.com/a/212866/259952
