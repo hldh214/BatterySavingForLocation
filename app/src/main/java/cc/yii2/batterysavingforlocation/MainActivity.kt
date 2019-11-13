@@ -3,10 +3,17 @@ package cc.yii2.batterysavingforlocation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import cc.yii2.batterysavingforlocation.utils.LocationProviders
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ *  https://github.com/RichyHBM/Monochromatic/wiki/Enabling-WRITE_SECURE_SETTINGS-permission
+ *  https://android.stackexchange.com/a/212866/259952
+ *
+ *  e.g.
+ *  adb shell pm grant cc.yii2.batterysavingforlocation android.permission.WRITE_SECURE_SETTINGS
+ *  adb shell dumpsys package cc.yii2.batterysavingforlocation | grep WRITE_SECURE_SETTINGS
+ */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         this.enableButton()
         this.getLocationMode()
-
-        // https://github.com/RichyHBM/Monochromatic/wiki/Enabling-WRITE_SECURE_SETTINGS-permission
-        // https://android.stackexchange.com/a/212866/259952
-        // adb shell pm grant cc.yii2.batterysavingforlocation android.permission.WRITE_SECURE_SETTINGS
-        // adb shell dumpsys package cc.yii2.batterysavingforlocation | grep WRITE_SECURE_SETTINGS
-        Toast.makeText(this, "done", Toast.LENGTH_LONG).show()
     }
 
     private fun getLocationMode() {
