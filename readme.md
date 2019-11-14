@@ -7,8 +7,19 @@
 ## So?
 
 Inspired by [this answer](https://android.stackexchange.com/a/212866/259952)
+
 I made this shitty app to control location_mode
+
 With ugly user interface and a handy quick setting tile
+
+```bash
+# first we need grant permissions via adb
+adb shell pm grant cc.yii2.batterysavingforlocation android.permission.WRITE_SECURE_SETTINGS
+
+# then we can check if we done right
+adb shell dumpsys package cc.yii2.batterysavingforlocation
+```
+
 Enjoy~
 
 ## Screenshots
